@@ -1,10 +1,10 @@
-Flask==2.1.2                  # Web framework for the backend
-Flask-CORS==3.0.10            # To handle Cross-Origin Resource Sharing (if needed)
-pandas==1.5.3                 # Data manipulation and analysis
-numpy==1.24.3                 # Numerical computing
-scikit-learn==1.2.0           # Machine learning library (for DecisionTreeClassifier)
-joblib==1.2.0                 # For saving and loading the trained model
-pyttsx3==2.90                 # Text-to-speech conversion
-nltk==3.8.1                   # Natural Language Processing toolkit
-spacy==3.4.4                  # Advanced NLP library
-
+ctransformers
+sentence-transformers
+pinecone-client
+langchain
+flask
+pypdf
+python-dotenv
+-e .
+langchain_community
+langchain_pinecone
