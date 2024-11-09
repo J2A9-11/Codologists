@@ -1,0 +1,9 @@
+Place the model locally in this folder as it cannot be uploaded on github due to its size.
+
+Download link-
+
+https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/tree/main
+
+Model name-
+
+llama-2-7b-chat.ggmlv3.q4_0.bin
