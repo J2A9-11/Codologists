@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="stylep.css">
+</head>
+<body>
+    <div class="container">
+        <img src="" alt="">
+
+        <aside class="sidebar">
+            <h2>AI</h2>
+            <nav>
+                <ul>
+                    <li><a href="#">New Chat</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Chat Section -->
+        <main class="chat-section">
+            <div class="chat-header">
+                <h2>Chat</h2>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message user">Hello! How can I help you today?</div>
+                <div class="message assistant">I'm looking for some assistance.</div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message here...">
+                <button id="sendButton">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript to handle sending messages
+        document.getElementById("sendButton").addEventListener("click", function() {
+            const userInput = document.getElementById("userInput");
+            const messageText = userInput.value.trim();
+
+            if (messageText !== "") {
+                const chatMessages = document.getElementById("chatMessages");
+                
+                // Create a new div for the user message
+                const userMessage = document.createElement("div");
+                userMessage.classList.add("message", "user");
+                userMessage.textContent = messageText;
+
+                // Append the user message to the chat messages
+                chatMessages.appendChild(userMessage);
+
+                // Clear the input field
+                userInput.value = "";
+
+                // Scroll to the bottom of the chat messages
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

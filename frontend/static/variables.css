@@ -1,0 +1,9 @@
+/* Universal Styling */
+:root {
+    --primary-bg: #1c0650;
+    --chat-bg: #14043a;
+    --secondary-bg: #cb61eb;
+    --hyperlink-text-color: rgb(237, 154, 245);
+    --text-color: white;
+    --accent-color: rgb(245, 163, 241);
+}

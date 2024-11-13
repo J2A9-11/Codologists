@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+</head>
+<body>
+    <header>
+        <a style="color: white; text-decoration: none;" href="{{ url_for('home') }}">HealthBot</a>
+        <nav class="header-buttons">
+            <a href="{{ url_for('chat.chatroom') }}">New Chat</a> <!-- Updated New Chat link to redirect to /chatroom -->
+            <a href="#">Chat History</a>
+            <a href="{{ url_for('auth.profile') }}" class="header-profile">
+                <span>{{ session.get('username', 'Guest') }}</span>
+            </a>
+            <a href="{{ url_for('auth.logout') }}" class="header-logout">Logout</a> <!-- Added Logout link -->
+        </nav>
+    </header>
+</body>
+</html>

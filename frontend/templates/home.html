@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthBot Landing Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <!-- Include Header -->
+    {% include 'header.html' %}
+
+    <!-- Main Content Section -->
+    <main>
+
+        <br><br><br><br><br><br><br><br><br>
+        <h1>Welcome to HealthBot</h1><br>
+        <p>Your personal health assistant, here to help you track and manage your well-being.</p>
+    </main>
+
+    <!-- Include Footer -->
+    {% include 'footer.html' %}
+
+</body>
+</html>
