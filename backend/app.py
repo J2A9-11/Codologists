@@ -27,6 +27,7 @@ docsearch=PC.from_existing_index(index_name, embeddings)
 PROMPT=PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 chain_type_kwargs={"prompt": PROMPT}
 
+
 llm=CTransformers(model=r"E:\Codologists\backend\model\llama-2-7b-chat.ggmlv3.q4_0.bin",
                   model_type="llama",
                   config={'max_new_tokens':512,
@@ -38,6 +39,7 @@ qa=RetrievalQA.from_chain_type(
     retriever=docsearch.as_retriever(search_kwargs={'k': 2}),
     return_source_documents=True, 
     chain_type_kwargs=chain_type_kwargs)
+
 
 @app.route("/get", methods=["GET", "POST"])
 def chat():
@@ -51,3 +53,4 @@ def chat():
 
 if __name__ == '__main__':
     app.run(debug= True)
+
