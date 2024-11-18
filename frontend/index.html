@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        /* Chat container styling */
+        .chat-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: var(--chat-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            position: relative;
+        }
+
+        /* Chat messages container */
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            padding-bottom: 60px; /* To give space for the input box */
+        }
+
+        /* Individual message styling */
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+
+        /* User message styling */
+        .message.user {
+            background-color: var(--secondary-bg);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* Bot message styling */
+        .message.assistant {
+            background-color: var(--secondary-bg);
+            color: white;
+            align-self: flex-start;
+        }
+
+        /* Chat input section */
+        .chat-input {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: var(--chat-bg);
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px none #ccc;
+            font-size: 14px;
+            background-color: var(--primary-bg);
+            color: white;
+        }
+
+        .chat-input button {
+            padding: 10px 15px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Include the Header -->
+    {% include 'header.html' %}
+
+    <!-- Main Chat Container -->
+    <div class="chat-container">
+        <main class="chat-section">
+            <div class="chat-header">
+                <h2>Chat with HealthBot</h2>
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Ask me anything..." autocomplete="off">
+                <button id="sendButton">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include the Footer -->
+    {% include 'footer.html' %}
+
+    <script>
+        // Initialize socket connection
+        var socket = io.connect('http://127.0.0.1:5000');  // Ensure this matches your backend address
+
+        // Send message when the button is clicked
+        document.getElementById('sendButton').addEventListener('click', function() {
+            var userInput = document.getElementById('userInput').value;
+            if (userInput.trim() !== "") {
+                socket.emit('send_message', { message: userInput });  // Emit message to server
+                document.getElementById('userInput').value = "";  // Clear the input field
+            }
+        });
+
+        // Listen for incoming messages from the server
+        socket.on('receive_message', function(data) {
+            var chatMessages = document.getElementById('chatMessages');
+            var newMessage = document.createElement('div');
+
+            // If message is from user, add class 'user' and align right
+            if (data.sender === 'user') {
+                newMessage.classList.add('message', 'user');
+            } else {
+                // If message is from assistant (bot), add class 'assistant' and align left
+                newMessage.classList.add('message', 'assistant');
+            }
+            
+            newMessage.textContent = data.message;
+            chatMessages.appendChild(newMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;  // Scroll to the bottom
+        });
+    </script>
+</body>
+</html>
