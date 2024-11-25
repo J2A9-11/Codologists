@@ -6,7 +6,11 @@ from flask_bcrypt import Bcrypt
 auth_bp = Blueprint('auth', __name__)
 
 # MongoDB Atlas connection
+<<<<<<< Updated upstream
 client = MongoClient("mongodb+srv://sahakartik2952004:8tXLrkqXsnfUEidN@cluster.l9tvc.mongodb.net/")
+=======
+client = MongoClient("mongodb+srv://sahakartik2952004:8tXLrkqXsnfUEidN@cluster.l9tvc.mongodb.net/")  # Update connection string if needed
+>>>>>>> Stashed changes
 db = client['healthbot']  # Database name in Atlas
 users_collection = db['users']  # Collection name remains 'users'
 
@@ -19,6 +23,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
+<<<<<<< Updated upstream
         user = users_collection.find_one({'username': username})
         if user and bcrypt.check_password_hash(user['password'], password):
             session['username'] = username
@@ -26,6 +31,18 @@ def login():
         else:
             flash("Invalid username or password")
             return redirect(url_for('auth.login'))
+=======
+        # Check if the username exists in the database
+        user = users_collection.find_one({'username': username})
+        if user and bcrypt.check_password_hash(user['password'], password):
+            session['username'] = username
+            session['logged_in'] = True  # Set logged_in key
+            return redirect(url_for('home'))  # Redirect to home page if login is successful
+        else:
+            flash("Invalid username or password")
+            return redirect(url_for('auth.login'))  # Stay on the login page if authentication fails
+    
+>>>>>>> Stashed changes
     return render_template('login.html')
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
@@ -34,30 +51,54 @@ def signup():
         username = request.form['username']
         password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
 
+<<<<<<< Updated upstream
         # Check if the user already exists
         if users_collection.find_one({'username': username}):
             flash("Username already exists")
             return redirect(url_for('auth.signup'))
+=======
+        # Check if the username already exists
+        if users_collection.find_one({'username': username}):
+            flash("Username already exists")
+            return redirect(url_for('auth.signup'))  # Stay on the signup page if the username exists
+>>>>>>> Stashed changes
         
         # Insert new user data
         users_collection.insert_one({
             'username': username,
             'password': password,
         })
+<<<<<<< Updated upstream
         flash("Signup successful! Please login.")
         return redirect(url_for('auth.login'))
+=======
+        # Log the user in directly after signup
+        session['username'] = username
+        session['logged_in'] = True  # Set logged_in key
+        flash("Signup successful!")
+        return redirect(url_for('home'))  # Redirect to home page after successful signup
+    
+>>>>>>> Stashed changes
     return render_template('signup.html')
 
 @auth_bp.route('/profile')
 def profile():
+<<<<<<< Updated upstream
     if 'username' not in session:
         flash("Please login to access your profile")
         return redirect(url_for('auth.login'))
+=======
+    if not session.get('logged_in'):  # Check logged_in status
+        flash("Please login to access your profile")
+        return redirect(url_for('auth.login'))  # Redirect to login if not authenticated
+    
+>>>>>>> Stashed changes
     user = users_collection.find_one({'username': session['username']})
     return render_template('profile.html', username=user['username'])
 
 @auth_bp.route('/update_profile', methods=['POST'])
 def update_profile():
+<<<<<<< Updated upstream
     if 'username' not in session:
         flash("Please login to update your profile")
         return redirect(url_for('auth.login'))
@@ -72,11 +113,28 @@ def update_profile():
             flash("Username already taken")
             return redirect(url_for('auth.profile'))
         session['username'] = new_username  # Update session
+=======
+    if not session.get('logged_in'):  # Check logged_in status
+        flash("Please login to update your profile")
+        return redirect(url_for('auth.login'))  # Redirect to login if not authenticated
+    
+    user = users_collection.find_one({'username': session['username']})
+    new_username = request.form['username']
+    
+    # Check and update username if changed
+    if new_username != user['username']:
+        if users_collection.find_one({'username': new_username}):
+            flash("Username already taken")
+            return redirect(url_for('auth.profile'))  # Stay on profile page if username exists
+        
+        session['username'] = new_username  # Update session with new username
+>>>>>>> Stashed changes
         users_collection.update_one({'username': user['username']}, {'$set': {'username': new_username}})
     
     flash("Username updated successfully!")
     return redirect(url_for('auth.profile'))
 
+<<<<<<< Updated upstream
 
 @auth_bp.route('/update_password', methods=['POST'])
 def update_password():
@@ -87,6 +145,15 @@ def update_password():
     # Fetch current user data
     user = users_collection.find_one({'username': session['username']})
     
+=======
+@auth_bp.route('/update_password', methods=['POST'])
+def update_password():
+    if not session.get('logged_in'):  # Check logged_in status
+        flash("Please login to update your password")
+        return redirect(url_for('auth.login'))  # Redirect to login if not authenticated
+    
+    user = users_collection.find_one({'username': session['username']})
+>>>>>>> Stashed changes
     current_password = request.form['current_password']
     new_password = request.form['new_password']
     confirm_password = request.form['confirm_password']
@@ -107,8 +174,15 @@ def update_password():
 
 @auth_bp.route('/logout')
 def logout():
+<<<<<<< Updated upstream
     session.pop('username', None)
     flash("You have been logged out")
     return redirect(url_for('auth.login'))
 
 
+=======
+    session.pop('username', None)  # Remove username from session
+    session.pop('logged_in', None)  # Remove logged_in key
+    flash("You have been logged out")
+    return redirect(url_for('auth.login'))  # Redirect to login page after logout
+>>>>>>> Stashed changes

@@ -1,5 +1,12 @@
 @import url('variables.css');
 
+<<<<<<< Updated upstream
+=======
+*{
+    transition: background 0.3s;
+}
+
+>>>>>>> Stashed changes
 body {
     font-family: comfortaa;
     text-align: center;
@@ -8,7 +15,11 @@ body {
     height: 100vh;
     margin: 0;
     background-color: var(--primary-bg);
+<<<<<<< Updated upstream
     color: white;
+=======
+    color: var(--text-color);
+>>>>>>> Stashed changes
 }
 
 a {
@@ -31,6 +42,10 @@ input, button {
     padding: 10px;
     border: none;
     border-radius: 5px;
+<<<<<<< Updated upstream
+=======
+    background-color: var(--chat-bg, #3f3f3f);
+>>>>>>> Stashed changes
 }
 
 button {
@@ -48,6 +63,10 @@ button:hover {
     margin: 20px 0;
 }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 .flash-message {
     padding: 10px;
     background-color: #f8d7da;
@@ -57,4 +76,11 @@ button:hover {
     margin-bottom: 10px;
 }
 
+<<<<<<< Updated upstream
+=======
+.secondary-text{
+    color: rgba(255, 255, 255, 0.575);
+}
+
+>>>>>>> Stashed changes
 

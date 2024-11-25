@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<<<<<<< Updated upstream
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+=======
+>>>>>>> Stashed changes
     <style>
         /* Chat container styling */
         .chat-container {
             max-width: 800px;
             width: 100%;
             margin: 20px auto;
+<<<<<<< Updated upstream
             background-color: var(--chat-bg);
+=======
+            background-color: var(--chat-bg, #2d2d2d);
+>>>>>>> Stashed changes
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -40,6 +47,7 @@
             border-radius: 10px;
             word-wrap: break-word;
         }
+<<<<<<< Updated upstream
 
         /* User message styling */
         .message.user {
@@ -53,38 +61,79 @@
             background-color: var(--secondary-bg);
             color: white;
             align-self: flex-start;
+=======
+        
+        /* User message styling */
+        .message.user {
+            background-color: var(--secondary-bg, #0078d4);
+            color: white;
+            align-self: flex-end;
+            text-align: right; /* Added for text alignment */
+        }
+        
+        /* Bot message styling */
+        .message.assistant {
+            background-color: var(--primary-bg, #3f3f3f);
+            color: var(--text-color);
+            align-self: flex-start;
+            text-align: left; /* Added for text alignment */
+>>>>>>> Stashed changes
         }
 
         /* Chat input section */
         .chat-input {
             position: absolute;
             bottom: 0;
+<<<<<<< Updated upstream
             width: 100%;
             display: flex;
             justify-content: space-between;
             padding: 10px;
             background-color: var(--chat-bg);
+=======
+            width: 98%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+>>>>>>> Stashed changes
         }
 
         .chat-input input {
             flex-grow: 1;
             padding: 10px;
             border-radius: 5px;
+<<<<<<< Updated upstream
             border: 1px none #ccc;
             font-size: 14px;
             background-color: var(--primary-bg);
             color: white;
+=======
+            border: none;
+            font-size: 14px;
+            background-color: var(--primary-bg, #3f3f3f);
+            color: var(--text-color);
+>>>>>>> Stashed changes
         }
 
         .chat-input button {
             padding: 10px 15px;
             color: white;
+<<<<<<< Updated upstream
+=======
+            background-color: var(--secondary-bg, #0078d4);
+>>>>>>> Stashed changes
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
         }
 
+<<<<<<< Updated upstream
+=======
+        .chat-input button:hover {
+            background-color: var(--accent-color, #005bb5);
+        }
+>>>>>>> Stashed changes
     </style>
 </head>
 <body>
@@ -95,14 +144,22 @@
     <div class="chat-container">
         <main class="chat-section">
             <div class="chat-header">
+<<<<<<< Updated upstream
                 <h2>Chat with HealthBot</h2>
+=======
+                <h2>Chat with Codologist</h2>
+>>>>>>> Stashed changes
             </div>
 
             <div class="chat-messages" id="chatMessages"></div>
 
             <div class="chat-input">
                 <input type="text" id="userInput" placeholder="Ask me anything..." autocomplete="off">
+<<<<<<< Updated upstream
                 <button id="sendButton">Send</button>
+=======
+                <button id="sendButton" onclick="sendMessage()">Send</button>
+>>>>>>> Stashed changes
             </div>
         </main>
     </div>
@@ -111,6 +168,7 @@
     {% include 'footer.html' %}
 
     <script>
+<<<<<<< Updated upstream
         // Initialize socket connection
         var socket = io.connect('http://127.0.0.1:5000');  // Ensure this matches your backend address
 
@@ -140,6 +198,65 @@
             chatMessages.appendChild(newMessage);
             chatMessages.scrollTop = chatMessages.scrollHeight;  // Scroll to the bottom
         });
+=======
+// Attach an event listener to detect Enter key in the input field
+document.getElementById('userInput').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent default Enter behavior
+        sendMessage(); // Call sendMessage function
+    }
+});
+
+async function sendMessage() {
+    const userInput = document.getElementById('userInput').value;
+    if (userInput.trim() === "") return;
+
+    const chatMessages = document.getElementById('chatMessages');
+
+    // Add user's message to chat
+    const userMessageElement = document.createElement('div');
+    userMessageElement.className = 'message user';
+    userMessageElement.textContent = userInput;
+    chatMessages.appendChild(userMessageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Clear the input
+    document.getElementById('userInput').value = "";
+
+    // Add "HealthBot is thinking..." placeholder
+    const thinkingMessageElement = document.createElement('div');
+    thinkingMessageElement.className = 'message assistant';
+    thinkingMessageElement.textContent = "HealthBot is thinking...";
+    chatMessages.appendChild(thinkingMessageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+        // Send message to the backend
+        const response = await fetch('http://127.0.0.1:5000/get', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ msg: userInput })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Remove the placeholder and add the actual bot response
+        thinkingMessageElement.textContent = data.response;
+    } catch (error) {
+        console.error('Error:', error);
+
+        // Replace placeholder with error message
+        thinkingMessageElement.textContent = "Sorry, something went wrong.";
+    }
+}
+
+>>>>>>> Stashed changes
     </script>
 </body>
 </html>

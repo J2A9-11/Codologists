@@ -1,9 +1,29 @@
 /* Universal Styling */
 :root {
+<<<<<<< Updated upstream
     --primary-bg: #1c0650;
     --chat-bg: #14043a;
     --secondary-bg: #cb61eb;
     --hyperlink-text-color: rgb(237, 154, 245);
     --text-color: white;
     --accent-color: rgb(245, 163, 241);
+=======
+    /* Light theme variables */
+    --primary-bg: #ffffff; /* White background */
+    --chat-bg: #f5f5f5; /* Light gray background for chat */
+    --secondary-bg: #ff69b4; /* Light pink for accents and buttons */
+    --hyperlink-text-color: #ff1493; /* Deep pink for hyperlinks */
+    --text-color: #333333; /* Dark text for readability */
+    --accent-color: #f898d0; /* Orange for highlights */
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+    --primary-bg: #121212; /* Black background */
+    --chat-bg: #181818; /* Dark gray background for chat */
+    --secondary-bg: #4f8cc9; /* Light blue for accents and buttons */
+    --hyperlink-text-color: #00bfff; /* Light blue for hyperlinks */
+    --text-color: #ffffff; /* White text */
+    --accent-color: #6bc5e0; /* Tomato red for highlights */
+>>>>>>> Stashed changes
 }
