@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - HealthBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Add the styles for two-column layout */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-container .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-container .column h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-container input[type="password"],
+        .form-container input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            background-color: var(--chat-bg, #3f3f3f);
+            color: var(--text-color); /* Set text color to match theme */
+        }
+        
+        .form-container button {
+            padding: 10px;
+            font-size: 1em;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--secondary-bg); /* Set background to primary color */
+        }
+
+        /* For smaller screens (e.g., mobile), stack columns vertically */
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Include Header -->
+    {% include 'header.html' %}
+
+    <!-- Main Content -->
+    <main class="profile-container">
+        <br><br><h1>Update Your Profile</h1><br><br>
+
+        <!-- Form Container (Two Columns) -->
+        <div class="form-container">
+            <!-- Left Column: Update Personal Details -->
+            <div class="column">
+                <h2>Update Personal Details</h2>
+                <form action="{{ url_for('auth.update_profile') }}" method="POST">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ session.get('username', 'Guest') }}" required>
+
+                    <button type="submit">Update Username</button>
+                </form>
+            </div>
+
+            <!-- Right Column: Update Password -->
+            <div class="column">
+                <h2>Update Password</h2>
+                <form action="{{ url_for('auth.update_password') }}" method="POST">
+                    <label for="current_password">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
+
+                    <label for="new_password">New Password:</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
+
+                    <label for="confirm_password">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+
+                    <button type="submit">Update Password</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Include Footer -->
+    {% include 'footer.html' %}
+
+</body>
+</html>

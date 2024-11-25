@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='variables.css') }}">
+    <title>HealthBot Header</title>
+    <style>
+        /* Flexbox for header layout */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--secondary-bg, #ffffff);
+            color: white;
+        }
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Add spacing between navigation items */
+        }
+
+        .theme-toggle-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Circular slider styling */
+        .theme-toggle-wrapper input[type="checkbox"] {
+            appearance: none;
+            width: 50px;
+            height: 25px;
+            background-color: var(--accent-color, #14043a);
+            border-radius: 25px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle-wrapper input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: 2.5px;
+            left: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle-wrapper input[type="checkbox"]:checked {
+            background-color: var(--chat-bg, #6181eb);
+        }
+
+        .theme-toggle-wrapper input[type="checkbox"]:checked::before {
+            transform: translateX(25px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a style="color: inherit; text-decoration: none;" href="{{ url_for('home') }}">HealthBot <span class="secondary-text">by Codologist</span></a>
+        <nav class="header-buttons">
+            <!-- Theme toggle button -->
+            <label class="theme-toggle-wrapper">
+                <input type="checkbox" id="themeToggle">
+            </label>
+            <a href="{{ url_for('chatroom') }}" class="header-new-chat">New Chat</a>
+            <a href="{{ url_for('auth.profile') }}" class="header-profile">
+                <span>{{ session.get('username', 'Login') }}</span>
+            </a>
+            {% if session.get('logged_in') %}
+                <a href="{{ url_for('auth.logout') }}" class="header-logout">Logout</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        // Set the initial theme based on localStorage
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
