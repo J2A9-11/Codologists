@@ -27,6 +27,14 @@ docsearch=PC.from_existing_index(index_name, embeddings)
 PROMPT=PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 chain_type_kwargs={"prompt": PROMPT}
 
+<<<<<<< Updated upstream
+=======
+llm = CTransformers(
+    model=r"model\llama-2-7b-chat.ggmlv3.q4_0.bin",
+    model_type="llama",
+    config={'max_new_tokens': 2000, 'temperature': 0.4, 'context_length':800}
+)
+>>>>>>> Stashed changes
 
 llm=CTransformers(model=r"E:\Codologists\backend\model\llama-2-7b-chat.ggmlv3.q4_0.bin",
                   model_type="llama",
