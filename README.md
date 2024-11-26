@@ -15,6 +15,17 @@ The **Medical Chatbot** is an AI-powered application designed to provide accurat
 
 ---
 
+## How the Interface Looks
+
+### Chatroom
+![Chatroom Screenshot](./chatroom_interface.png)
+
+### Login
+![Login Screenshot](./login_interface.png)
+
+
+---
+
 ## **Technologies Used**
 ### **Backend:**
 - Flask
