@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 auth_bp = Blueprint('auth', __name__)
 
 # MongoDB Atlas connection
-client = MongoClient("mongodb+srv://sahakartik2952004:8tXLrkqXsnfUEidN@cluster.l9tvc.mongodb.net/")  # Update connection string if needed
+client = MongoClient("Use-your-credentials")  # Update connection string if needed
 db = client['healthbot']  # Database name in Atlas
 users_collection = db['users']  # Collection name remains 'users'
 
