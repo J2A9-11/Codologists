@@ -63,10 +63,31 @@ The **Medical Chatbot** is an AI-powered application designed to provide accurat
 Run the following command to clone the repository:
 ```bash
 git clone https://github.com/your-username/medical-chatbot.git
-cd medical-chatbot
 ```
 
-### **2. Create a Python Virtual Environment**
+### **2. Create a `.env` file in the root directory and add your Pinecone credentials as follows**
+```bash
+PINECONE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
+### **3. Download the quantize model from the link provided in model folder & keep the model in the model directory**
+```bash
+## Download the Llama 2 Model:
+
+llama-2-7b-chat.ggmlv3.q4_0.bin
+
+
+## From the following link:
+https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/tree/main
+```
+
+### **4. Use your mongodb credentials in auth.py file**
+```bash
+client = MongoClient("Use-your-credentials")  # Update connection string if needed
+```
+
+
+### **5. Create a Python Virtual Environment**
 Set up a virtual environment to manage dependencies:
 ```bash
 python -m venv venv
@@ -82,13 +103,25 @@ Activate the virtual environment:
   source venv/bin/activate
   ```
 
-### **3. Install Required Libraries**
+### **6. Move into backend directory**
+Run the following command
+```bash
+cd backend
+```
+
+### **7. Install Required Libraries**
 Install all necessary dependencies listed in `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
 
-### **4. Run the Application**
+### **8. Store the embeddings in Pinecone**
+Run the following command:
+```bash
+python store_index.py
+```
+
+### **9. Run the Application**
 Start the Flask server:
 ```bash
 flask run
